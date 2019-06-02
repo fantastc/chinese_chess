@@ -1,7 +1,7 @@
-中国象棋 
+# 中国象棋 
 
 体验地址
-https://fantastflynn.github.io/display/chinese_chess/
+https://fantastc.github.io/chinese_chess
 
 
 
