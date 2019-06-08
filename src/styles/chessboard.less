@@ -1,0 +1,227 @@
+body {
+  background-color: #eee;
+}
+
+@lineColor: #222; 
+@cellW: 80px;
+@cellH: 80px;
+@riverH: 1/1.5*@cellH; 
+@chessBg: #ccc;
+@chessW: 1/1.3*@cellW;
+@chessH: 1/1.3*@cellH;
+@border: solid @lineColor 1px;
+@border2: solid @lineColor 2px;
+.gameWrap {
+  color: gold;
+  display: inline-block;
+  text-align: center;
+  padding: @cellH 0 0 @cellW;
+  border: 3px solid gold;
+}
+.chessboard {
+  font-size: 0; 
+  display: inline-block;
+}
+.row {
+  position: relative;
+}
+.row:nth-child(1) .cell{
+  border-top: @border2;
+}
+.row:nth-child(1) .cell:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: top;
+  transform: rotate(-45deg);
+}
+.row:nth-child(1) .cell:nth-child(5)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: bottom;
+  transform: rotate(45deg);
+}
+.row:nth-child(2) .cell:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: bottom;
+  transform: rotate(45deg);
+}
+.row:nth-child(2) .cell:nth-child(5)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: top;
+  transform: rotate(-45deg);
+}
+.row:nth-child(1) .cell:last-child {
+  border-top: none;
+}
+.row:nth-child(4) .cell {
+  border-bottom: @border2;
+}
+.row:nth-child(4) .cell:last-child {
+  border: none;
+}
+.row:nth-child(5)::after {
+  content: '楚河 汉界';
+  font-size: 20px;
+  color: #aaa;
+  position: absolute;
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  left: -1*@cellW;
+  width: 50%; 
+  height: 50%;
+  margin: auto;
+}
+.row:nth-child(5) .cell {
+  border: none;
+  height: 1*@riverH;
+}
+.row:nth-child(5) .cell:first-child {
+  border-left: @border2;
+}
+.row:nth-child(5) .cell:nth-last-child(2) {
+  border-right: @border2;
+}
+.row:nth-child(6) .cell {
+  border-top: @border2;
+}
+.row:nth-child(6) .cell:last-child {
+  border: none;
+}
+.row:last-child .cell {
+  border: none;
+  border-top: @border;
+}
+.row:last-child .cell:last-child {
+  border: none;
+}
+.row:nth-last-child(2) .cell:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: bottom;
+  transform: rotate(45deg);
+}
+.row:nth-last-child(2) .cell:nth-child(5)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: top;
+  transform: rotate(-45deg);
+}
+.row:nth-last-child(3) .cell:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: top;
+  transform: rotate(-45deg);
+}
+.row:nth-last-child(3) .cell:nth-child(5)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border: 1px solid @lineColor;
+  height: 141.4%;
+  transform-origin: bottom;
+  transform: rotate(45deg);
+}
+.cell {
+  display: inline-block;
+  width: 1*@cellW;
+  height: 1*@cellH;
+  border: @border;
+  position: relative;
+  box-sizing: border-box;
+}
+.cell:first-child {
+  border-left: @border2;
+}
+.cell:nth-last-child(2) {
+  border-right: @border2;
+}
+.cell:last-child {
+  border: none;
+}
+.chess {
+  font-size: 25px;
+  font-weight: bold;
+  font-family: kaiti;
+  text-align: center;
+  line-height: 1*@chessH;
+  width: 1*@chessW;
+  height: 1*@chessH;
+  background-color: @chessBg;
+  position: absolute;
+  top: -1/2*@chessH; 
+  left: -1/2*@chessW; 
+  user-select: none; 
+  opacity: 0;
+  box-sizing: border-box;
+}
+.chess[data-status=normal] {
+  opacity: 1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.chess[data-status=active] {
+  opacity: 1;
+  border-radius: 50%;
+  animation: resize 0.5s linear infinite alternate;
+}
+.chess[data-status=move] {
+  opacity: 0.4;
+  cursor: pointer;
+  outline: 1px solid gold;
+  transform: scale(0.7);
+}
+.chess[data-status=replace] {
+  opacity: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid gold;
+}
+
+@keyframes resize {
+  0% {
+    background-color: gold;
+  }
+  100% {
+    background-color: gray;
+  }
+}

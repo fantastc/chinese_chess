@@ -5,9 +5,17 @@
   <title>中国象棋HTML版本</title>
 </head>
 <body>
-  <div id="game1" style="text-align:center;">
-    <div class="gameWrap"> 
-      <!-- <div class="chessboard"> </div> -->
+  
+  
+  <div class="handleArea">
+    <button type="button" id="startGame">开始游戏</button>
+  </div>
+  <div class="main" style="display:none;">
+    <div id="game1" > </div>
+    <div class="tipArea">
+      <div class="userTip">
+        当前执棋方: <span class="currentUser">  </span>
+      </div>
     </div>
   </div>
   

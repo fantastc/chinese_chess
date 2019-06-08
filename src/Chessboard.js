@@ -428,10 +428,12 @@ export default class Chessboard {
     //   // ],
     //   // ...,
     // ];
+    this.elem = document.createElement("div")
+    this.elem.setAttribute("class","chessboard")
     this._layout = new Array(10).fill('').map((itm,idx)=>{
       let row = document.createElement("div")
       row.setAttribute("class","row")
-      wrapEl.appendChild(row)
+      this.elem.appendChild(row)
       return new Array(9).fill('').map((itm1,idx1)=>{
         let cell = document.createElement("div")
         cell.setAttribute("class","cell")
@@ -454,9 +456,14 @@ export default class Chessboard {
         return chessObj;
       })
     })
-    this.elem = wrapEl;
     
+    this.event = new EventTarget();
     this.layoutChess();
+    
+    let gameWrap = document.createElement("div")       
+    gameWrap.setAttribute("class","gameWrap")
+    gameWrap.appendChild(this.elem)
+    wrapEl.appendChild( gameWrap )
   }
   
   layoutChess(){
@@ -664,7 +671,15 @@ export default class Chessboard {
   
   // 移动棋子 
   chessRun(startChess,endChess,isReplace){
+    // 吃子 
+    if (isReplace) { 
+      if ( endChess.type==='king' ) {
+        this.event.emit('finish', endChess.color==="red"?0:1)
+      }
+    }
+    
     this._count++; 
+    this.event.emit('afterRun',this._count%2);
     this.clearStatus();
     this.renderChess(endChess,{
       status: 'normal',
@@ -682,10 +697,6 @@ export default class Chessboard {
       type: '',
       range: [[0,0],[0,0]],
     })
-    
-    // 吃子 
-    if (isReplace) { }
-    
     
   }
   // 更新棋子视图 
